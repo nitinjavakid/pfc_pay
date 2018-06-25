@@ -8,7 +8,7 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use DMS\Service\Meetup\MeetupKeyAuthClient;
 use App\Event;
 use App\Console\Commands\CheckInstamojo;
-use App\Console\Commands\CheckMeetup;
+use App\Console\Commands\CheckMeetups;
 
 class Kernel extends ConsoleKernel
 {
@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command(CheckInstamojo::class)->everyMinute();
-        $schedule->command(CheckMeetup::class)->everyThirtyMinutes();
+        $schedule->command(CheckMeetups::class)->everyThirtyMinutes();
     }
 
     /**
