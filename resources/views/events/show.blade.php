@@ -65,7 +65,7 @@
                @endif
            </td>
            <td>
-           {{ $attendee->payment == null ? "Pending" : $attendee->payment->type }}
+           {{ $attendee->payment == null ? "Pending" : $attendee->payment->type . " - " . $attendee->payment->net_amount/ $attendee->payment->paid_for->count() }}
            </td>
        </tr>
        @endforeach
@@ -78,8 +78,12 @@
 <center>
     <input type="submit" class="btn btn-primary" value="Pay using Instamojo" onclick='$("#type").val("instamojo"); return true;'>
     @if(Gate::allows('cash', $event))
+    <div class="form-inline">
+    New Cost:
+    <input type="text" name="newcost" class="form-control" value="{{$event->cost}}">
     <input type="submit" class="btn btn-primary" value="Pay using Cash" onclick='$("#type").val("cash"); return true;'>
     <input type="submit" class="btn btn-primary" value="Pay using Paytm" onclick='$("#type").val("paytm"); return true;'>
+    </div>
     @endif
 </center>
 </form>

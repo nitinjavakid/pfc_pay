@@ -44,9 +44,11 @@ class EventController extends Controller
             return redirect()->route('events.show', ["id" => $id]);
         }
 
+        $perperson = $event->cost;
         if($request->input("type") == "cash" || $request->input("type") == "paytm")
         {
             $this->authorize('cash', $event);
+            $perperson = $request->input("newcost");
         }
 
         $attendees = $event->attendees;
@@ -70,11 +72,12 @@ class EventController extends Controller
             }
         }
 
-        $cost = $event->cost * count($payfor);
+        $cost = $perperson * count($payfor);
 
         $redirect = redirect()->route('events.show', ["id" => $id]);
 
         $payment = new Payment();
+        $payment->net_amount = $cost;
         if($request->input("type") == "instamojo")
         {
             $purpose = $event->name . " " . $event->local_time . " " . " for ";
@@ -158,11 +161,16 @@ class EventController extends Controller
             return;
         }
 
+        Log::debug($request);
+
         if($request->input("status") == "Credit")
         {
-            $payment = Payment::where(["external_id" => $request->input('payment_request_id')])->first();
-            $payment->status = 'paid';
-            $payment->save();
+            DB::transaction(function() use ($request) {
+                $payment = Payment::where(["external_id" => $request->input('payment_request_id')])->first();
+                $payment->net_amount = float($request->input("amount")) - float($request->input("fees"));
+                $payment->status = 'paid';
+                $payment->save();
+            });
         }
 
         return redirect()->route('events.show', ["id" => $id]);
