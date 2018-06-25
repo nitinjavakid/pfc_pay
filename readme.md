@@ -1,1 +1,1 @@
-Project enabled payments for PFC Footballers Club
+Project enables payments for PFC Footballers Club
