@@ -1,6 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+<div class="panel-group">
+<div class="panel panel-default">
+    <div class="panel-heading">
+    <h4 class="panel-title">
+        <a data-toggle="collapse" href="#collapse1">Event details</a>
+    </h4>
+    </div>
+    <div id="collapse1" class="panel-collapse collapse">
+    <div class="panel-body">
 {{ Form::open(['route' => ["events.update", $event->id], "method" => "put" ]) }}
 <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">Event name</label>
@@ -43,6 +52,11 @@
     <center><input type="submit" value="Update" class="btn btn-primary" /></center>
     @endif
 {{ Form::close() }}
+    </div>
+    </div>
+  </div>
+</div>
+
 
 {{Form::open(['route' => ["events.pay", $event->id]]) }}
 <table class="table table-striped">
@@ -71,6 +85,11 @@
        @endforeach
     </tbody>
 </table>
+<center><b>
+    Cash - {{ $event->payments->where('type', '=', 'cash')->where('status', 'paid')->sum("net_amount") }} |
+    PayTM - {{ $event->payments->where('type', '=', 'paytm')->where('status', 'paid')->sum("net_amount") }} |
+    Instamojo - {{ $event->payments->where('type', '=', 'instamojo')->where('status', 'paid')->sum("net_amount") }}
+</b></center>
 <center>
 {!! Captcha::display() !!}
 </center>

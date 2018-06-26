@@ -28,4 +28,9 @@ class Event extends Model
     {
         return $this->hasMany('App\EventHistory')->orderBy("created_at", "desc");
     }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
 }

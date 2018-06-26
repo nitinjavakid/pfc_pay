@@ -9,6 +9,7 @@
            <th scope="col">Date</th>
            <th scope="col">Title</th>
            <th scope="col">Status</th>
+           <th scope="col">Total</th>
            <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -23,6 +24,10 @@
            </td>
            <td>
                {{ $event['status'] }}
+           </td>
+           <td>
+           {{ $event->payments->where('status', '=', 'paid')
+                    ->sum("net_amount") - $event['water'] - $event['ground'] }}
            </td>
            <td>
                <a href="{{ route('events.show', ["id" => $event->id]) }}">
