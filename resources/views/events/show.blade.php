@@ -54,7 +54,10 @@
 </div>
 
     @if(Gate::allows('update', $event))
-    <center><input type="submit" value="Update" class="btn btn-primary" /></center>
+    <center>
+        <input name="settled" type='checkbox' value='settled' /> Settled
+        <input type="submit" value="Update" class="btn btn-primary" />
+    </center>
     @endif
 {{ Form::close() }}
     </div>
