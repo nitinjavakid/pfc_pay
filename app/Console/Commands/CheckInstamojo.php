@@ -59,7 +59,10 @@ class CheckInstamojo extends Command
                isset($response['payments'][0]) &&
                $response['payments'][0]['status'] == 'Credit')
             {
-                DB::transaction(function() use ($payment) {
+                DB::transaction(function() use ($payment, $response) {
+                    $payment->net_amount = ((float) $response['payments'][0]['quantity'] * 
+                                            (float) $response['payments'][0]['unit_price']) - 
+                                           (float) $response['payments'][0]['fees'];
                     $payment->status = 'paid';
                     $payment->save();
                 });
