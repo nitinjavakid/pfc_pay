@@ -57,7 +57,7 @@ class EventController extends Controller
         {
             foreach($attendees as $attendee)
             {
-                if($attendee->attendee_id == $selected)
+                if($attendee->id == $selected)
                 {
                     if($attendee->payment_id != null)
                     {

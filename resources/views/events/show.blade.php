@@ -57,7 +57,7 @@
        <tr>
            <td>
                @if($attendee->payment == null)
-               <input type="checkbox" name="attendee[]" value="{{ $attendee->attendee->id }}" />
+               <input type="checkbox" name="attendee[]" value="{{ $attendee->id }}" />
                @endif
                {{ $attendee->attendee->name }}
                @if($attendee->guest)
