@@ -6,6 +6,11 @@
     <div class="panel-heading">
     <h4 class="panel-title">
         <a data-toggle="collapse" href="#collapse1">Event details</a>
+        <span style="float: right">
+        Cash - {{ $event->payments->where('type', '=', 'cash')->where('status', 'paid')->sum("net_amount") }} |
+        PayTM - {{ $event->payments->where('type', '=', 'paytm')->where('status', 'paid')->sum("net_amount") }} |
+        Instamojo - {{ $event->payments->where('type', '=', 'instamojo')->where('status', 'paid')->sum("net_amount") }}
+        </span>
     </h4>
     </div>
     <div id="collapse1" class="panel-collapse collapse">
@@ -85,11 +90,6 @@
        @endforeach
     </tbody>
 </table>
-<center><b>
-    Cash - {{ $event->payments->where('type', '=', 'cash')->where('status', 'paid')->sum("net_amount") }} |
-    PayTM - {{ $event->payments->where('type', '=', 'paytm')->where('status', 'paid')->sum("net_amount") }} |
-    Instamojo - {{ $event->payments->where('type', '=', 'instamojo')->where('status', 'paid')->sum("net_amount") }}
-</b></center>
 <center>
 {!! Captcha::display() !!}
 </center>
