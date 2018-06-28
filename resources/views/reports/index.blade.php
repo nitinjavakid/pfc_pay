@@ -22,6 +22,7 @@
 </tr>
 </table>
 
+<center><h4>Pending payments</h4></center>
 <table class="table table-striped">
     <thead>
         <tr>
