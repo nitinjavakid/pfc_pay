@@ -55,7 +55,9 @@
 
     @if(Gate::allows('update', $event))
     <center>
+        @if(Gate::allows('cash', $event))
         <input name="settled" type='checkbox' value='settled' /> Settled
+        @endif
         <input type="submit" value="Update" class="btn btn-primary" />
     </center>
     @endif

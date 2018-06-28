@@ -220,6 +220,7 @@ class EventController extends Controller
 
         if($request->input("settled") != null)
         {
+            $this->authorize('cash', $event);
             $description .= "Settled";
             $event->status = 'settled';
         }
