@@ -21,11 +21,19 @@ Route::post('/logout', function() {
 })->name('logout');
 
 Route::get('/', function () {
-   return redirect()->route('events.index');
+        return view('welcome');
 });
 
 Route::resource('events', 'EventController')->only([
    'index', 'show', 'update'
+]);
+
+Route::resource('attendees', 'AttendeeController')->only([
+   'index', 'show'
+]);
+
+Route::resource('report', 'ReportController')->only([
+   'index', 'show'
 ]);
 
 Route::post('events/{id}/pay', 'EventController@payment')->name('events.pay');
