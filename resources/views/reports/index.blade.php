@@ -21,4 +21,36 @@
 <td>{{ $payments_received + $payments_pending - $expense }}</td>
 </tr>
 </table>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+           <th scope="col">Date</th>
+           <th scope="col">Title</th>
+           <th scope="col">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach ($pendingea as $ea)
+       <tr>
+           <td>
+               {{ $ea->event->local_time }}
+           </td>
+           <td>
+               <a href="{{ route('events.show', ["id" => $ea->event_id]) }}">
+               {{ $ea->event->name }}
+               </a>
+           </td>
+           <td>
+               <a href="{{ route('attendees.show', ["id" => $ea->attendee_id]) }}">
+               {{ $ea->attendee->name }}
+               </a>
+           </td>
+           <td>
+               {{ $ea->event->cost }}
+           </td>
+       </tr>
+       @endforeach
+    </tbody>
+</table>
 @stop
