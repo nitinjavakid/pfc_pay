@@ -12,4 +12,10 @@ class AttendeeController extends Controller
         $attendees = Attendee::orderBy('name')->paginate(9);
         return view('attendees.index', ['attendees' => $attendees]);
     }
+
+    public function show(Attendee $attendee)
+    {
+        $pending = $attendee->events->where('payment_id', '=', null)->where('event.cost', '!=', 0);
+        return view('attendees.show', ['pending' => $pending, 'attendee' => $attendee]);
+    }
 }

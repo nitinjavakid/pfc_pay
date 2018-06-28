@@ -10,6 +10,6 @@ class Attendee extends Model
 
     public function events()
     {
-        return $this->belongsToMany('App\Event')->using('App\EventAttendee');
+        return $this->hasMany('App\EventAttendee');
     }
 }

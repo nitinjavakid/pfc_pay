@@ -38,14 +38,13 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        <li><a href="{{ route('events.index') }}">Events</a></li>
+                        <li><a href="{{ route('attendees.index') }}">Attendees</a></li>
+                        <li><a href="{{ route('reports.index') }}">Reports</a></li>
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
                         @guest
                             <li><a href="{{ route('login', 'meetup') }}">Login</a></li>
                         @else

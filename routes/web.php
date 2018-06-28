@@ -17,12 +17,12 @@ Route::get('/login/{provider}/callback', 'Auth\AuthController@handleProviderCall
 
 Route::post('/logout', function() {
     Auth::logout();
-    return redirect()->route('events.index');
+    return redirect()->route('home');
 })->name('logout');
 
 Route::get('/', function () {
         return view('welcome');
-});
+})->name('home');
 
 Route::resource('events', 'EventController')->only([
    'index', 'show', 'update'
@@ -32,7 +32,13 @@ Route::resource('attendees', 'AttendeeController')->only([
    'index', 'show'
 ]);
 
-Route::resource('report', 'ReportController')->only([
+Route::get('/me', function() {
+    $attendee = \App\Attendee::where('external_id', '=', Auth::user()->provider_id)->first();
+    $pending = $attendee->events->where('payment_id', '=', null)->where('event.cost', '!=', 0);
+    return view('attendees.show', ['pending' => $pending, 'attendee' => $attendee]);
+})->name('me');
+
+Route::resource('reports', 'ReportController')->only([
    'index', 'show'
 ]);
 

@@ -83,10 +83,12 @@
                @if($attendee->payment == null)
                <input type="checkbox" name="attendee[]" value="{{ $attendee->id }}" />
                @endif
+               <a href="{{ route('attendees.show', ["id" => $attendee->attendee->id ]) }}">
                {{ $attendee->attendee->name }}
                @if($attendee->guest)
                  's guest
                @endif
+               </a>
            </td>
            <td>
            {{ $attendee->payment == null ? "Pending" : $attendee->payment->type . " - " . $attendee->payment->net_amount/ $attendee->payment->paid_for->count() }}
