@@ -62,7 +62,8 @@ class CheckInstamojo extends Command
                 DB::transaction(function() use ($payment, $response) {
                     $payment->net_amount = ((float) $response['payments'][0]['quantity'] * 
                                             (float) $response['payments'][0]['unit_price']) - 
-                                           (float) $response['payments'][0]['fees'];
+                                            (float) $response['payments'][0]['fees'] -
+                                            ((float)$response['payments'][0]['fees'] * 18 / 100.0);
                     $payment->status = 'paid';
                     $payment->save();
                 });

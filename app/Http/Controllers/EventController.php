@@ -167,7 +167,9 @@ class EventController extends Controller
         {
             DB::transaction(function() use ($request) {
                 $payment = Payment::where(["external_id" => $request->input('payment_request_id')])->first();
-                $payment->net_amount = (float) $request->input("amount") - (float) $request->input("fees");
+                $payment->net_amount = (float) $request->input("amount") -
+                                       (float) $request->input("fees") -
+                                       ((float) $request->input("fees") * 18 / 100);
                 $payment->status = 'paid';
                 $payment->save();
             });
