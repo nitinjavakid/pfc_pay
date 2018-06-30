@@ -29,8 +29,11 @@ class PaymentObserver
 
             if($done)
             {
-                $attendee->event->status = 'received';
-                $attendee->event->save();
+                if($attendee->event->status != 'settled')
+                {
+                    $attendee->event->status = 'received';
+                    $attendee->event->save();
+                }
             }
         }
 
