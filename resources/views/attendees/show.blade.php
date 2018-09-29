@@ -24,7 +24,7 @@
                </a>
            </td>
            <td>
-               {{ $event->cost }}
+               {{ $event->event->cost }}
            </td>
        </tr>
        @endforeach
