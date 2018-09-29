@@ -9,6 +9,7 @@
         <tr>
            <th scope="col">Date</th>
            <th scope="col">Title</th>
+           <th scope="col">Amount</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,9 @@
                <a href="{{ route('events.show', ["id" => $event->event->id]) }}">
                {{ $event->event->name }}
                </a>
+           </td>
+           <td>
+               {{ $event->cost }}
            </td>
        </tr>
        @endforeach
