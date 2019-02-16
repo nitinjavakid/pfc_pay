@@ -92,7 +92,7 @@ class EventController extends Controller
                 "amount" => $cost,
                 "webhook" => route("events.payment_status", ['id'=>$event->id]),
                 "redirect_url" => route("events.show", ['id'=>$event->id]),
-                "expires_at" => Carbon::now()->addSeconds(60)->toIso8601ZuluString()
+                "expires_at" => Carbon::now()->addSeconds(600)->toIso8601ZuluString()
             ));
 
             $payment->type = 'instamojo';
