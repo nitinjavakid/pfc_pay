@@ -35,7 +35,11 @@ Route::resource('attendees', 'AttendeeController')->only([
 Route::get('/me', function() {
     $attendee = \App\Attendee::where('external_id', '=', Auth::user()->provider_id)->first();
     $pending = $attendee->events->where('payment_id', '=', null)->where('event.cost', '!=', 0);
-    return view('attendees.show', ['pending' => $pending, 'attendee' => $attendee]);
+    $total = 0;
+    foreach($pending as $entry) {
+        $total += $entry->event->cost;
+    }
+    return view('attendees.show', ['pending' => $pending, 'attendee' => $attendee, 'total' => $total]);
 })->name('me');
 
 Route::resource('reports', 'ReportController')->only([
