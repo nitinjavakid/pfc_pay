@@ -21,7 +21,7 @@ Route::post('/logout', function() {
 })->name('logout');
 
 Route::get('/', function () {
-        return view('welcome');
+    return view('welcome');
 })->name('home');
 
 Route::resource('events', 'EventController')->only([
@@ -32,15 +32,9 @@ Route::resource('attendees', 'AttendeeController')->only([
    'index', 'show'
 ]);
 
-Route::get('/me', function() {
-    $attendee = \App\Attendee::where('external_id', '=', Auth::user()->provider_id)->first();
-    $pending = $attendee->events->where('payment_id', '=', null)->where('event.cost', '!=', 0);
-    $total = 0;
-    foreach($pending as $entry) {
-        $total += $entry->event->cost;
-    }
-    return view('attendees.show', ['pending' => $pending, 'attendee' => $attendee, 'total' => $total]);
-})->name('me');
+Route::get('/me', 'AttendeeController@actions')->name('me');
+Route::get('/passbook', 'AttendeeController@passbook')->name('passbook');
+Route::get('/passbook/{id}', 'AttendeeController@others_passbook')->name('others_passbook');
 
 Route::resource('reports', 'ReportController')->only([
    'index', 'show'

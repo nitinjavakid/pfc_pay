@@ -181,7 +181,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\MeetupApiProvider::class,
-        App\Providers\InstamojoProvider::class
+        App\Providers\InstamojoProvider::class,
+        App\Providers\UtilServiceProvider::class
 
     ],
 
@@ -234,6 +235,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Captcha' => \Buzz\LaravelGoogleCaptcha\CaptchaFacade::class,
+        'Util' => \App\Util::class
 
     ],
 

@@ -18,12 +18,6 @@ class Event extends Model
         return $this->attendees()->get()->sortBy('attendee.name');
     }
 
-    public function getLocalTimeAttribute()
-    {
-        return \Carbon\Carbon::createFromTimeStamp(strtotime($this->time))
-            ->setTimezone('Asia/Kolkata')->format("d M Y h:i A");
-    }
-
     public function history()
     {
         return $this->hasMany('App\EventHistory')->orderBy("created_at", "desc");
@@ -32,5 +26,10 @@ class Event extends Model
     public function payments()
     {
         return $this->hasMany('App\Payment');
+    }
+
+    public function getLocalTimeAttribute()
+    {
+        return Util::local_time($this->time);
     }
 }

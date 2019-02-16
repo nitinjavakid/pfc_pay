@@ -19,7 +19,6 @@ class EventHistory extends Model
 
     public function getLocalTimeAttribute()
     {
-        return \Carbon\Carbon::createFromTimeStamp(strtotime($this->created_at))
-            ->setTimezone('Asia/Kolkata')->format("d M Y h:i A");
+        return Util::local_time($this->created_at);
     }
 }

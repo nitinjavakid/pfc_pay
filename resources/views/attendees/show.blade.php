@@ -4,6 +4,9 @@
 
 @section('content')
 <h4>Name: {{ $attendee->name }}</h4>
+@if(Gate::allows('viewall', App\Event::class))
+    <a href="{{ route('others_passbook', ["id" => $attendee->id ]) }}">View Passbook</a>
+@endif
 <table class="table table-striped">
     <thead>
         <tr>
