@@ -28,6 +28,14 @@
            </td>
        </tr>
        @endforeach
+       <tr>
+           <td colspan="2">
+               <b>Total</b>
+           </td>
+           <td>
+               {{ $total }}
+           </td>
+       </tr>
     </tbody>
 </table>
 @stop

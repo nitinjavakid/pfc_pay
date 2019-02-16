@@ -14,7 +14,11 @@ class ReportController extends Controller
         $expense = Event::sum('ground') + Event::sum('water');
         $collection = Payment::where('status', '=', 'paid')->sum('net_amount');
         $pending = 0.0;
-        $pendingea = EventAttendee::where('payment_id', '=', null)->orderBy('attendee_id')->get();
+        $pendingea = EventAttendee::whereNull('payment_id')
+                   ->whereHas('event', function($query) {
+                       $query->where('cost', '!=', 0);
+                   })
+                   ->orderBy('attendee_id')->get();
         foreach($pendingea as $ea)
         {
             $pending += $ea->event->cost;

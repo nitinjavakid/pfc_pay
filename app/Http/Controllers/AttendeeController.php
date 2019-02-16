@@ -16,6 +16,16 @@ class AttendeeController extends Controller
     public function show(Attendee $attendee)
     {
         $pending = $attendee->events->where('payment_id', '=', null)->where('event.cost', '!=', 0);
-        return view('attendees.show', ['pending' => $pending, 'attendee' => $attendee]);
+        $pendingTotal = 0;
+        foreach($pending as $entry)
+        {
+            $pendingTotal += $entry->event->cost;
+        }
+
+        return view('attendees.show',
+                    ['pending' => $pending,
+                     'attendee' => $attendee,
+                     'total' => $pendingTotal
+                    ]);
     }
 }
