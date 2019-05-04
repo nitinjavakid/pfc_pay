@@ -75,6 +75,31 @@
               return promise;
            }
 
+           function unsubscribeUserToPush() {
+               getSWRegistration()
+               .then(function(registration) {
+                  registration.pushManager.getSubscription()
+                  .then(function(subscription) {
+                     fetch('/notification/delete-subscription', {
+                        method: 'POST',
+                        headers: {
+                           'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                           endpoint: subscription.endpoint
+                        })
+                     })
+                     .then(function(response) {
+                        if(response.ok) {
+                           alert("Unsubscription successful");
+                        } else {
+                           alert("Unsubscription unsuccessful");
+                        }
+                     });
+                  });
+               });
+           }
+
            function subscribeUserToPush() {
               getSWRegistration()
               .then(function(registration) {
@@ -103,14 +128,10 @@
                  body: JSON.stringify(subscription)
               })
               .then(function(response) {
-                 if (!response.ok) {
-                    throw new Error('Bad status code from server.');
-                 }
-                 return response.json();
-              })
-              .then(function(responseData) {
-                 if (!(responseData.data && responseData.data.success)) {
-                    throw new Error('Bad response from server.');
+                 if (response.ok) {
+                    alert("Subscription successful");
+                 } else {
+                    alert("Subscription unsuccessful");
                  }
               });
            }
@@ -159,6 +180,10 @@
                                         <a href="#"
                                             onclick="askPermission()">
                                             Subscribe to notification
+                                        </a>
+                                        <a href="#"
+                                            onclick="unsubscribeUserToPush()">
+                                            Unsubscribe to notification
                                         </a>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

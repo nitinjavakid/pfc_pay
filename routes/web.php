@@ -44,3 +44,4 @@ Route::post('events/{id}/pay', 'EventController@payment')->name('events.pay');
 Route::post('events/{id}/paystatus', 'EventController@payment_status')->name('events.payment_status');
 
 Route::post('notification/save-subscription', 'NotificationController@save_subscription');
+Route::post('notification/delete-subscription', 'NotificationController@delete_subscription');

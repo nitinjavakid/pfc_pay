@@ -14,4 +14,10 @@ class NotificationController extends Controller
                                       $request->input('keys.p256dh'),
                                       $request->input('keys.auth'));
     }
+
+    public function delete_subscription(Request $request)
+    {
+        $user = \Auth::user();
+        $user->deletePushSubscription($request->input('endpoint'));
+    }
 }
