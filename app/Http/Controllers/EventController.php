@@ -127,6 +127,16 @@ class EventController extends Controller
             }
         });
 
+        foreach($payfor as $attendee)
+        {
+            print_r($attendee->attendee->external_id);
+            $user = \App\User::where('provider_id', '=', $attendee->attendee->external_id)->first();
+            if($user != null)
+            {
+               $user->notify(new \App\Notifications\PaymentPosted($user, $event, $perperson));
+            }
+        }
+
         return $redirect;
     }
 
