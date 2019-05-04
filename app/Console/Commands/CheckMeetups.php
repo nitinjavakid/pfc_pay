@@ -110,7 +110,8 @@ class CheckMeetups extends Command
         ));
 
         foreach($events as $event) {
-            if($event['time']/1000 > time()) continue;
+            if($event['time']/1000 > date_timestamp_get(date_sub(date_create(),
+	                             date_interval_create_from_date_string(env("TEAMS_BEFORE"))))) continue;
 
             $this->addEvent($event);
         }
