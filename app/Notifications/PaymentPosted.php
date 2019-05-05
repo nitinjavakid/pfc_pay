@@ -72,6 +72,6 @@ class PaymentPosted extends Notification
         return (new WebPushMessage)
 	   ->title('Payment posted')
 	   ->body('Your payment of ' . $this->price . ' was posted for event ' . $this->event->name . " " . $this->event->local_time)
-	   ->action('View passbook', 'passbook');
+           ->data("/passbook");
     }
 }
