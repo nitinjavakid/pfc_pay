@@ -48,7 +48,7 @@ class EventAddAttendee extends Command
             $attendee = Attendee::findOrFail($attendee_id);
             $event->attendees()->create([
                 "attendee_id" => $attendee->id,
-                "guest" => (bool) $guest
+                "guest" => ($guest === 'true')
             ]);
         });
     }
