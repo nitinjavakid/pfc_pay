@@ -8,6 +8,8 @@ use Auth;
 use Socialite;
 use App\User;
 
+use Illuminate\Support\Facades\Log;
+
 class AuthController extends Controller
 {
     /**
@@ -33,6 +35,10 @@ class AuthController extends Controller
         $user = Socialite::driver($provider)->user();
 
         $authUser = $this->findOrCreateUser($user, $provider);
+        Log::info(serialize($user));
+        $authUser->access_token = $user->token;
+        $authUser->refresh_token = $user->refreshToken;
+        $authUser->save();
         Auth::login($authUser, true);
         return redirect('/');
     }

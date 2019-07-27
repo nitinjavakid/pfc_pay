@@ -5,7 +5,8 @@ namespace App\Console\Commands;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Console\Command;
 
-use DMS\Service\Meetup\MeetupKeyAuthClient;
+use DMS\Service\Meetup\MeetupOAuth2Client;
+use App\MeetupOAuth2ClientCreator;
 use App\Event;
 use App\Attendee;
 use Carbon\Carbon;
@@ -32,10 +33,10 @@ class CheckMeetups extends Command
      * @return void
      */
     protected $client;
-    public function __construct(MeetupKeyAuthClient $client)
+    public function __construct()
     {
         parent::__construct();
-        $this->client = $client;
+        $this->client = MeetupOAuth2ClientCreator::create();
     }
 
 

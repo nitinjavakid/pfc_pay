@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use DMS\Service\Meetup\MeetupKeyAuthClient;
+use DMS\Service\Meetup\MeetupOAuth2Client;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 use Illuminate\Support\Facades\Log;
@@ -17,9 +17,9 @@ class EventPolicy
      *
      * @return void
      */
-    public function __construct(MeetupKeyAuthClient $meetup)
+    public function __construct()
     {
-        $this->meetup = $meetup;
+        $this->meetup = \App\MeetupOAuth2ClientCreator::create();
     }
 
     public function viewall($user)

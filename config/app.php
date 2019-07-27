@@ -180,7 +180,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\MeetupApiProvider::class,
         App\Providers\InstamojoProvider::class,
         App\Providers\UtilServiceProvider::class
 
