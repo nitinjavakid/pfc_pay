@@ -32,27 +32,25 @@ class CheckMeetups extends Command
      *
      * @return void
      */
-    protected $client;
     public function __construct()
     {
         parent::__construct();
-        $this->client = MeetupOAuth2ClientCreator::create();
     }
 
 
-    protected function addEvent($event)
+    protected function addEvent($client, $event)
     {
         $inevent = Event::where('external_id', $event['id'])->first();
         if($inevent == null)
         {
-            DB::transaction(function() use ($event) {
+            DB::transaction(function() use ($client, $event) {
                 $newevent = new Event();
                 $newevent->name = $event['name'];
                 $newevent->external_id = $event['id'];
                 $newevent->time = Carbon::createFromTimestamp($event['time']/1000);
                 $newevent->cost = 0.0;
 
-                $rsvps = $this->client->getRsvps(array(
+                $rsvps = $client->getRsvps(array(
                     'event_id' => $event['id'],
                     'rsvp' => 'yes'
                 ));
@@ -89,7 +87,8 @@ class CheckMeetups extends Command
      */
     public function handle()
     {
-        $events = $this->client->getEvents(array(
+        $client = MeetupOAuth2ClientCreator::create();
+        $events = $client->getEvents(array(
             'group_urlname' => env("MEETUP_GROUP"),
             'status' => 'past',
             'desc' => 'true'
@@ -101,10 +100,10 @@ class CheckMeetups extends Command
 
             if($event['time']/1000 <= $from) continue;
 
-            $this->addEvent($event);
+            $this->addEvent($client, $event);
         }
 
-        $events = $this->client->getEvents(array(
+        $events = $client->getEvents(array(
             'group_urlname' => env("MEETUP_GROUP"),
             'status' => 'upcoming',
             'page' => 10
@@ -114,7 +113,7 @@ class CheckMeetups extends Command
             if($event['time']/1000 > date_timestamp_get(date_add(date_create(),
 	                             date_interval_create_from_date_string(env("TEAMS_BEFORE"))))) continue;
 
-            $this->addEvent($event);
+            $this->addEvent($client, $event);
         }
     }
 }
