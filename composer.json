@@ -4,12 +4,6 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../meetup-api-client"
-        }
-    ],
     "require": {
         "php": ">=7.0.0",
         "buzz/laravel-google-captcha": "^2.1",
@@ -28,7 +22,7 @@
         "mockery/mockery": "~1.0",
         "phpunit/phpunit": "~6.0",
         "symfony/thanks": "^1.0",
-        "dms/meetup-api-client": "dev-master"
+        "dms/meetup-api-client": "^2.4.0"
     },
     "autoload": {
         "classmap": [
